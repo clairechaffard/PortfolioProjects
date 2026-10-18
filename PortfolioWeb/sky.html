@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Claire's Portfolio — Night Sky</title>
+
+  <style>
+    :root {
+      --night: #17121C;
+      --cream: #F3EBDD;
+      --rose: #D27097;
+      --light-rose: #EFB1C2;
+      --sage: #A3B58B;
+      --muted: #A99DAA;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      background: var(--night);
+      color: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    #sky-visual {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    #sky-visual canvas {
+      display: block;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 30px 5%;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .logo {
+      color: var(--cream);
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--rose);
+    }
+
+    .top-label {
+      color: var(--muted);
+    }
+
+    .back-link {
+      color: var(--cream);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .back-link:hover {
+      color: var(--rose);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      min-height: 75vh;
+      padding: 5vh 8% 60px;
+      pointer-events: none;
+    }
+
+    .intro {
+      max-width: 520px;
+      pointer-events: auto;
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: 0.98;
+      font-weight: 400;
+      letter-spacing: -4px;
+      margin: 0;
+    }
+
+    h1 em {
+      color: var(--light-rose);
+      font-family: Georgia, serif;
+      font-weight: 400;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 330px;
+      margin-top: 25px;
+    }
+
+    .instruction {
+      position: fixed;
+      z-index: 2;
+      left: 8%;
+      bottom: 55px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 25px 5%;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 24px 6%;
+      }
+
+      .top-label {
+        display: none;
+      }
+
+      main {
+        padding: 8vh 7% 50px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .instruction {
+        left: 7%;
+        bottom: 55px;
+        max-width: 240px;
+      }
+
+      footer {
+        padding: 20px 6%;
+        font-size: 8px;
+      }
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <div id="sky-visual"></div>
+  
+
+  <header class="topbar">
+    <a class="logo" href="index.html">MG<span>@</span></a>
+
+    <span class="top-label">A MAP OF MY IDEAS</span>
+
+    <a class="back-link" href="index.html">← BACK TO THE GARDEN</a>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">THE OTHER SIDE OF THE GARDEN</p>
+
+      <h1>
+        Somewhere<br>
+        <em>in the stars.</em>
+      </h1>
+
+      <p class="description">
+        Every project is a little constellation.
+        Find one that catches your eye and follow its light.
+      </p>
+    </section>
+  </main>
+
+  <p class="instruction">
+    MOVE YOUR CURSOR TO EXPLORE<br>
+    CLICK A CONSTELLATION TO DISCOVER IT
+  </p>
+
+  <footer>
+    <span>INDEPENDENTLY GROWN</span>
+    <span>CONNECTED BY CURIOSITY</span>
+  </footer>
+
+  <script src="libraries/p5.min.js"></script>
+  <script src="sky.js"></script>
+
+</body>
+</html>

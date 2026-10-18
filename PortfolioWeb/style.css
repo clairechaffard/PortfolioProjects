@@ -342,26 +342,24 @@ footer {
     height: 300px;
   }
 }
-
 .moon-link {
   position: fixed;
   top: 32px;
   right: 36px;
   z-index: 10;
-  display: block;
   width: 54px;
   height: 54px;
-  cursor: pointer;
+  display: block;
 }
 
 .moon {
+  position: relative;
   display: block;
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background: #F3EBDD;
   box-shadow: 0 0 18px #D2709740;
-  position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
