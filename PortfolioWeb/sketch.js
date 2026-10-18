@@ -3,13 +3,20 @@ const palette = {
   night: [23, 18, 28],
   cream: [243, 235, 221],
   burgundy: [69, 8, 8],
-  rose: [184, 75, 112],
-  sage: [163, 181, 139]
+  rose: [210, 112, 151],
+  lightRose: [239, 177, 194],
+  sage: [163, 181, 139],
+  bark: [100, 67, 64]
 };
 
-let plants = [];
-let particles = [];
-let flowers = [];
+let branches = [];
+let blossoms = [];
+let petals = [];
+let fireflies = [];
+
+let treeX;
+let treeY;
+let treeScale = 1.2;
 
 function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
@@ -17,38 +24,107 @@ function setup() {
 
   pixelDensity(Math.min(window.devicePixelRatio || 1, 2));
 
-  // Generate the garden
-  createGarden();
+  createTree();
+  createFireflies();
 }
 
-function createGarden() {
-  plants = [];
-  particles = [];
-  flowers = [];
+function createTree() {
+  branches = [];
+  blossoms = [];
 
-  // Plants growing from the bottom of the screen
-  const plantCount = Math.max(9, Math.floor(width / 75));
+  treeX = width * 0.2;
+  treeY = height * 1.2 ;
 
-  for (let i = 0; i < plantCount; i++) {
-    plants.push({
-      x: (i / (plantCount - 1)) * width,
-      height: random(height * 0.2, height * 0.62),
-      bend: random(-65, 65),
-      speed: random(0.5, 1.2),
-      phase: random(TWO_PI),
-      leafSize: random(16, 31),
-      side: random() < 0.5 ? -1 : 1
-    });
+  // Start with the trunk and grow recursively
+  growBranch(
+    treeX, treeY,
+    -HALF_PI,
+    height * 0.25,
+    0,
+    9
+  );
+
+  // Flowers grow along the branches
+  for (const branch of branches) {
+    if (branch.depth >= 3) {
+      const count = Math.floor(branch.len / 7);
+
+      for (let i = 0; i < count; i++) {
+        const t = random(0.15, 1);
+        const x = branch.x + cos(branch.angle) * branch.len * t;
+        const y = branch.y + sin(branch.angle) * branch.len * t;
+
+        blossoms.push({
+          x,
+          y,
+          size: random(5, 8),
+          phase: random(TWO_PI),
+          shade: random()
+        });
+      }
+    }
   }
+}
 
-  // Tiny floating lights
-  for (let i = 0; i < 65; i++) {
-    particles.push({
+function growBranch(x, y, angle, len, depth, maxDepth) {
+  if (depth > maxDepth || len < 5) return;
+
+  const endX = x + cos(angle) * len;
+  const endY = y + sin(angle) * len;
+
+  branches.push({
+    x, y,
+    endX, endY,
+    angle,
+    len,
+    depth,
+    phase: random(TWO_PI)
+  });
+
+  // Natural forked branches
+  if (depth < maxDepth) {
+    const spread = random(0.25, 0.65);
+    const nextLen = len * random(0.68, 0.79);
+
+    growBranch(
+      endX, endY,
+      angle - spread,
+      nextLen,
+      depth + 1,
+      maxDepth
+    );
+
+    growBranch(
+      endX, endY,
+      angle + spread * random(0.8, 1.5),
+      nextLen * random(0.75, 1.05),
+      depth + 1,
+      maxDepth
+    );
+
+    // Extra side branch for a fuller canopy
+    if (random() > 0.35) {
+      growBranch(
+        endX, endY,
+        angle + random(-0.35, 0.35),
+        nextLen * 0.72,
+        depth + 1,
+        maxDepth
+      );
+    }
+  }
+}
+
+function createFireflies() {
+  fireflies = [];
+
+  for (let i = 0; i < 35; i++) {
+    fireflies.push({
       x: random(width),
       y: random(height),
-      size: random(1, 3),
-      speed: random(0.15, 0.6),
-      phase: random(TWO_PI)
+      size: random(1, 2.5),
+      phase: random(TWO_PI),
+      speed: random(0.2, 0.7)
     });
   }
 }
@@ -56,175 +132,202 @@ function createGarden() {
 function draw() {
   background(...palette.night);
 
-  // Soft atmospheric glow
-  noStroke();
-  for (let i = 5; i >= 0; i--) {
-    fill(69, 8, 8, 3);
-    ellipse(width * 0.5, height * 0.62,
-      width * (0.2 + i * 0.12),
-      height * (0.1 + i * 0.06));
-  }
+  drawMoonGlow();
+  drawFireflies();
 
-  drawParticles();
+  // A little movement, like a breeze
+  const breeze = sin(frameCount * 0.008) * 0.025;
 
-  // Draw plants from the back to the front
-  for (let i = 0; i < plants.length; i++) {
-    drawPlant(plants[i], i);
-  }
-
-  drawFlowers();
-}
-
-function drawPlant(plant, index) {
-  const sway = sin(frameCount * 0.012 * plant.speed + plant.phase) * 15;
-  const mouseInfluence = map(
-    mouseX, 0, width, -10, 10, true
-  );
-
-  const topX = plant.x + plant.bend + sway + mouseInfluence;
-  const topY = height - plant.height;
-
-  // Stem
-  noFill();
-  stroke(...palette.sage, 150);
-  strokeWeight(1.3);
-
-  beginShape();
-  vertex(plant.x, height + 10);
-  bezierVertex(
-    plant.x - sway * 0.2, height - plant.height * 0.3,
-    topX + sway * 0.6, height - plant.height * 0.7,
-    topX, topY
-  );
-  endShape();
-
-  // Leaves along the stem
-  const leafCount = Math.floor(plant.height / 34);
-
-  for (let j = 1; j <= leafCount; j++) {
-    const t = j / (leafCount + 1);
-
-    const x = lerp(plant.x, topX, t);
-    const y = lerp(height, topY, t);
-
-    const wave = sin(frameCount * 0.018 + j + plant.phase) * 4;
-    const side = j % 2 === 0 ? 1 : -1;
-
-    drawLeaf(
-      x + wave,
-      y,
-      side * plant.leafSize,
-      side,
-      frameCount * 0.015 + plant.phase + j * 0.4
-    );
-  }
-
-  // Flower bud at the top
-  if (index % 2 === 0 || plant.height > height * 0.45) {
-    flowers.push({
-      x: topX,
-      y: topY,
-      size: randomSeededSize(index),
-      phase: plant.phase,
-      color: index % 3 === 0 ? palette.cream : palette.rose
-    });
-  }
-}
-
-function drawLeaf(x, y, size, side, angle) {
   push();
-  translate(x, y);
-  rotate(side * 0.55 + sin(angle) * 0.12);
+  translate(treeX, treeY);
+  scale(treeScale);
+  translate(-treeX, -treeY);
 
-  noStroke();
-  fill(...palette.sage, 150);
+  // Draw branches from thick trunk to delicate twigs
+  for (const b of branches) {
+    const sway = sin(frameCount * 0.012 + b.phase) *
+      b.depth * 0.6;
 
-  // Organic leaf shape
-  beginShape();
-  vertex(0, 0);
-  bezierVertex(
-    size * 0.25, -size * 0.7,
-    size * 0.9, -size * 0.65,
-    size, 0
-  );
-  bezierVertex(
-    size * 0.65, size * 0.15,
-    size * 0.2, size * 0.1,
-    0, 0
-  );
-  endShape(CLOSE);
+    const x1 = b.x;
+    const y1 = b.y;
+    const x2 = b.endX + sway;
+    const y2 = b.endY + breeze * b.depth * 15;
 
-  // Fine vein
-  stroke(...palette.cream, 55);
-  strokeWeight(0.6);
-  line(0, 0, size * 0.8, -size * 0.05);
+    stroke(
+      palette.bark[0],
+      palette.bark[1],
+      palette.bark[2],
+      220
+    );
+    strokeWeight(map(b.depth, 0, 9, 9, 0.7));
+    line(x1, y1, x2, y2);
+    
+  }
+
+  // Blossoms attached to the branches
+  for (const flower of blossoms) {
+    drawBlossom(flower);
+  }
 
   pop();
+
+  // Petals flying around the tree
+  updatePetals();
 }
 
-function randomSeededSize(index) {
-  return 4 + (index % 4) * 1.2;
+function drawMoonGlow() {
+  noStroke();
+
+  for (let i = 8; i >= 0; i--) {
+    fill(210, 112, 151, 3);
+    circle(
+      width * 0.5,
+      height * 0.43,
+      (i + 1) * Math.min(width, height) * 0.12
+    );
+  }
 }
 
-function drawFlowers() {
-  // Each flower grows from a plant tip
-  for (const flower of flowers) {
-    const pulse = 1 + sin(frameCount * 0.025 + flower.phase) * 0.08;
-    const s = flower.size * pulse;
+function drawBlossom(flower) {
+  const sway = sin(frameCount * 0.015 + flower.phase) * 2;
+  const pulse = 1 + sin(frameCount * 0.025 + flower.phase) * 0.06;
 
+  push();
+  translate(flower.x + sway, flower.y);
+  rotate(sin(frameCount * 0.01 + flower.phase) * 0.12);
+  scale(pulse);
+
+  noStroke();
+
+  const pink = flower.shade > 0.5
+    ? palette.rose
+    : palette.lightRose;
+
+  // Five rounded petals
+  for (let i = 0; i < 5; i++) {
     push();
-    translate(flower.x, flower.y);
-    rotate(sin(frameCount * 0.01 + flower.phase) * 0.08);
+    rotate(TWO_PI * i / 5);
 
-    noStroke();
-
-    // Five delicate petals
-    for (let i = 0; i < 5; i++) {
-      push();
-      rotate(TWO_PI * i / 5);
-
-      fill(...flower.color, 190);
-      ellipse(0, -s, s * 0.65, s * 1.35);
-
-      pop();
-    }
-
-    // Flower center
-    fill(...palette.cream, 220);
-    circle(0, 0, s * 0.5);
+    fill(...pink, 220);
+    ellipse(0, -flower.size * 0.65,
+      flower.size * 0.65,
+      flower.size * 1.15);
 
     pop();
   }
 
-  // Clear the list; plant tips will be added again next frame
-  flowers = [];
+  fill(...palette.cream, 230);
+  circle(0, 0, flower.size * 0.35);
+
+  pop();
 }
 
-function drawParticles() {
+function updatePetals() {
+  for (let i = petals.length - 1; i >= 0; i--) {
+    const p = petals[i];
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    p.vx *= 0.99;
+    p.vy += 0.012;
+
+    p.rotation += p.spin;
+    p.life -= 1;
+
+    // Gentle floating motion
+    p.x += sin(frameCount * 0.04 + p.phase) * 0.5;
+
+    push();
+    translate(p.x, p.y);
+    rotate(p.rotation);
+
+    noStroke();
+    fill(...p.color, map(p.life, 0, 100, 0, 220, true));
+    ellipse(0, 0, p.size * 0.7, p.size * 1.4);
+
+    pop();
+
+    if (p.life <= 0 || p.y > height + 30) {
+      petals.splice(i, 1);
+    }
+  }
+}
+
+function mouseMoved() {
+  // Centre de la couronne du cerisier
+  const canopyX = treeX;
+  const canopyY = treeY - height * 0.25 * treeScale;
+
+  // Rayon d'interaction autour de l'arbre
+  const radius = Math.min(width, height) * 0.68 * treeScale;
+
+  const distance = dist(
+    mouseX,
+    mouseY,
+    canopyX,
+    canopyY
+  );
+
+  if (distance < radius) {
+    for (let i = 0; i < 3; i++) {
+      releasePetal(mouseX, mouseY);
+    }
+  }
+
+  return false;
+}
+
+function mouseDragged() {
+  // Dragging creates a stronger gust of petals
+  for (let i = 0; i < 5; i++) {
+    releasePetal(mouseX, mouseY, 1.8);
+  }
+
+  return false;
+}
+
+function releasePetal(x, y, force = 1) {
+  if (petals.length > 250) return;
+
+  const angle = random(-PI, PI);
+
+  petals.push({
+    x: x + random(-12, 12),
+    y: y + random(-12, 12),
+    vx: cos(angle) * random(0.8, 3) * force,
+    vy: random(-2.5, 0.5) * force,
+    size: random(5, 10),
+    rotation: random(TWO_PI),
+    spin: random(-0.08, 0.08),
+    life: random(70, 150),
+    phase: random(TWO_PI),
+    color: random() > 0.5
+      ? palette.rose
+      : palette.lightRose
+  });
+}
+
+function drawFireflies() {
   noStroke();
 
-  for (const p of particles) {
-    p.y -= p.speed;
-
-    // Float back up from the bottom
-    if (p.y < -10) {
-      p.y = height + 10;
-      p.x = random(width);
-    }
-
-    const glow = (sin(frameCount * 0.035 + p.phase) + 1) * 0.5;
-    const alpha = 35 + glow * 100;
+  for (const f of fireflies) {
+    const alpha = map(
+      sin(frameCount * 0.025 + f.phase),
+      -1, 1, 25, 150
+    );
 
     fill(...palette.cream, alpha);
     circle(
-      p.x + sin(frameCount * 0.008 + p.phase) * 5,
-      p.y,
-      p.size
+      f.x + sin(frameCount * 0.006 + f.phase) * 8,
+      f.y + cos(frameCount * 0.008 + f.phase) * 5,
+      f.size
     );
   }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  createGarden();
+  createTree();
+  createFireflies();
 }
