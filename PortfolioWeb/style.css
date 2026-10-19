@@ -6,7 +6,7 @@
   --cream: #F3EBDD;
   --burgundy: #450808;
   --rose: #B84B70;
-  --sage: #A3B58B;
+  --sage: #a5e7d2;
   --muted: #A8A0AB;
 }
 
@@ -103,7 +103,7 @@ main {
 }
 
 .intro {
-  width: min(520px, 45vw);
+  width: min(520px, 90vw);
   margin-left: auto;
   margin-top: 65px;
   text-align: right;
@@ -115,11 +115,6 @@ main {
   margin-bottom: 28px;
   letter-spacing: 0.14em;
   font-size: 10px;
-}
-
-.intro h1 {
-  margin: 25px 0;
-  line-height: 1.04;
 }
 
 .description {
@@ -137,10 +132,14 @@ main {
   margin: 25px 0;
 }
 
-.intro h1 em {
+.intro h2 {
   color: var(--rose);
-  font-family: Georgia, serif;
-  font-weight: 400;
+  font-family: 'Lucida Handwriting', cursive;
+  font-size: clamp(21px, 5.3vw, 35px);
+  line-height: 0.99;
+  letter-spacing: -0.065em;
+  font-weight: 300;
+  margin: 25px 0;
 }
 
 .description {
@@ -226,7 +225,7 @@ footer {
   height: 54px;
   border-radius: 50%;
   background: var(--cream);
-  box-shadow: 0 0 22px #D2709740;
+  box-shadow: 0 0 22px #d8fff3;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -243,7 +242,7 @@ footer {
 
 .moon-link:hover .moon {
   transform: scale(1.12) rotate(-12deg);
-  box-shadow: 0 0 34px #D2709780;
+  box-shadow: 0 0 34px #eaf0cd;
 }
 
 /* INDIVIDUAL PROJECT PAGES */
@@ -424,4 +423,50 @@ footer {
   *::after {
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ── Neon Text ── */
+/*.interactive-letter {
+  display: inline-block;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+  transition: filter 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  transform-origin: center; 
+}
+
+.interactive-letter.is-hovered {
+  color: #ffffdf;
+  cursor: default; 
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 8px #fcff3c) drop-shadow(0 0 30px #fcff3c)
+          drop-shadow(0 0 60px #14ffb4) drop-shadow(0 0 90px #14ffb4);
+}
+*/
+
+/* ── Neon Text ── */
+.interactive-letter {
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+
+  color: inherit;
+  transition: color 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.interactive-letter.is-hovered {
+  color: #ffffdf;
+  cursor: default;
+  transform: scale(1.15);
+  filter:
+    drop-shadow(0 0 8px #fcff3c)
+    drop-shadow(0 0 20px #fcff3c)
+    drop-shadow(0 0 40px #14ffb4);
 }
