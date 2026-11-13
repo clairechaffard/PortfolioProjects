@@ -3,10 +3,12 @@
 
 :root {
   --night: #17121C;
+  --almost: #251c2d;
   --cream: #F3EBDD;
   --burgundy: #450808;
   --rose: #B84B70;
-  --sage: #a5e7d2;
+  --beau: #a5e7d2;
+  --sage: #e7a5d3;
   --muted: #A8A0AB;
 }
 
@@ -35,7 +37,7 @@ a {
 #visual {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -48,10 +50,14 @@ a {
 /* TOP BAR */
 
 .topbar,
-main,
 footer {
   position: relative;
   z-index: 1;
+}
+
+main {
+  position: relative;
+  z-index: auto;
 }
 
 .topbar {
@@ -86,6 +92,7 @@ footer {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
 .contact {
@@ -99,22 +106,28 @@ main {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 90px 6vw 40px 8vw;
+  padding: 10px 6vw 40px 8vw;
 }
 
 .intro {
-  width: min(520px, 90vw);
+  width: min(760px, 90vw);
   margin-left: auto;
-  margin-top: 65px;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
   text-align: right;
   pointer-events: none;
 }
 
 .titleintro {
   color: var(--sage);
-  margin-bottom: 28px;
+  margin: 0;
   letter-spacing: 0.14em;
   font-size: 10px;
+  text-align: right;
+  order: 2;
 }
 
 .description {
@@ -123,23 +136,28 @@ main {
   line-height: 1.9;
 }
 
-
-.intro h1 {
-  font-size: clamp(42px, 5.3vw, 76px);
+.titleintro2 {
+  width: 100%;
+  color: var(--almost);
+  text-align: center;
+  font-size: clamp(28px, 8.5vw, 76px);
   line-height: 0.99;
   letter-spacing: -0.065em;
   font-weight: 500;
-  margin: 25px 0;
+  margin: 0;
+  white-space: nowrap;
+  order: 1;
 }
 
-.intro h2 {
-  color: var(--rose);
-  font-family: 'Lucida Handwriting', cursive;
-  font-size: clamp(21px, 5.3vw, 35px);
+.titleintro3 {
+  /*color: var(--rose);
+  font-family: 'Lucida Handwriting', cursive;*/
+  font-size: clamp(70px, 5vw, 35px);
   line-height: 0.99;
   letter-spacing: -0.065em;
-  font-weight: 300;
-  margin: 25px 0;
+  font-weight: 600;
+  margin: 0;
+  order: 3;
 }
 
 .description {
@@ -221,8 +239,8 @@ footer {
 .moon {
   position: relative;
   display: block;
-  width: 54px;
-  height: 54px;
+  width: 108px;
+  height: 108px;
   border-radius: 50%;
   background: var(--cream);
   box-shadow: 0 0 22px #d8fff3;
@@ -234,8 +252,8 @@ footer {
   position: absolute;
   top: -6px;
   left: 17px;
-  width: 54px;
-  height: 54px;
+  width: 108px;
+  height: 108px;
   border-radius: 50%;
   background: var(--night);
 }
@@ -291,9 +309,12 @@ footer {
   border: 1px solid #514651;
   background: radial-gradient(
     ellipse at center,
-    #450808 0%,
-    #281722 32%,
+    #17121C 0%,
+    #17121C 32%,
     #17121C 72%
+    /*#450808 0%,
+    #281722 32%,
+    #17121C 72%*/
   );
   display: grid;
   place-items: center;
@@ -358,6 +379,7 @@ footer {
 
   .top-label {
     display: none;
+    white-space: nowrap;
   }
 
   main {
@@ -370,12 +392,7 @@ footer {
 
   .intro {
     width: 100%;
-    max-width: 470px;
     margin-left: 0;
-  }
-
-  .intro h1 {
-    font-size: clamp(42px, 11vw, 64px);
   }
 
   .project-library {
@@ -437,6 +454,8 @@ footer {
 }
 
 .interactive-letter.is-hovered {
+  position: relative;
+  z-index: 2;
   color: #ffffdf;
   cursor: default; 
   transform: scale(1.25);
@@ -462,11 +481,13 @@ footer {
 }
 
 .interactive-letter.is-hovered {
+  position: relative;
+  z-index: 2;
   color: #ffffdf;
   cursor: default;
   transform: scale(1.15);
   filter:
     drop-shadow(0 0 8px #fcff3c)
     drop-shadow(0 0 20px #fcff3c)
-    drop-shadow(0 0 40px #14ffb4);
+    drop-shadow(0 0 40px #fbaaf3);
 }

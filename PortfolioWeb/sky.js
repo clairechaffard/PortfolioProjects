@@ -3,22 +3,22 @@ const palette = {
   cream: [243, 235, 221],
   rose: [210, 112, 151],
   lightRose: [239, 177, 194],
-  sage: [163, 181, 139]
+  sage: [163, 181, 139], 
+  textcolor: [2,2,2],
 };
 
 let stars = [];
 let constellations = [];
 let hoveredConstellation = -1;
+let projectPreview;
+let lastPreviewedConstellation = -1;
 
-// Caméra contrôlée par nous (au lieu de orbitControl) :
-// c'est ce qui permet de projeter EXACTEMENT comme p5 dessine.
 const FOV = Math.PI / 3;
 let autoRotation = 0;
 let viewYaw = 0;
 let viewPitch = 0;
 let zoom = 1;
 
-// Valeurs calculées une fois par frame et partagées avec la projection
 let sceneYaw = 0;
 let scenePitch = 0;
 let eyeZ = 800;
@@ -29,8 +29,8 @@ let pressY = 0;
 const projectData = [
   {
     name: "Michel's Story",
-    category: "01 — STORYTELLING",
-    href: "project.html?id=michel",
+    href: "projects/michel/michel.html",
+    description: "A 2D RPG in Java with interconnected rooms, items, and enemies.",
     color: "rose",
     angle: 0.2,
     tilt: -0.35,
@@ -40,9 +40,9 @@ const projectData = [
     ]
   },
   {
-    name: "Mario Kart",
-    category: "02 — GAME DESIGN",
-    href: "project.html?id=mariokart",
+    name: "Javions",
+    href: "project.html?id=javions",
+    description: "A flight-tracking system that receives and decodes live ADS-B signals.",
     color: "sage",
     angle: 2.5,
     tilt: 0.3,
@@ -52,9 +52,9 @@ const projectData = [
     ]
   },
   {
-    name: "Game Of Life",
-    category: "03 — CREATIVE CODING",
-    href: "project.html?id=GameOfLife",
+    name: "Roi",
+    href: "project.html?id=roi",
+    description: "A memory-challenging card game for two to four players.",
     color: "lightRose",
     angle: 4.5,
     tilt: -0.2,
@@ -70,7 +70,7 @@ function setup() {
 
   canvas.parent("sky-visual");
   pixelDensity(Math.min(window.devicePixelRatio || 1, 2));
-  textFont("Georgia");
+  projectPreview = document.getElementById("project-preview");
 
   createStars();
   createConstellations();
@@ -104,11 +104,6 @@ function createConstellations() {
   }));
 }
 
-/* ------------------------------------------------------------------ */
-/*  Maths 3D : MÊMES rotations et MÊME ordre que dans draw()           */
-/* ------------------------------------------------------------------ */
-
-// Mêmes formules que rotateX / rotateY de p5
 function rotX(p, a) {
   return [
     p[0],
@@ -125,18 +120,13 @@ function rotY(p, a) {
   ];
 }
 
-// Transformation de la scène, équivalente à :
-//   scale(zoom); rotateX(pitch); rotateY(yaw);
-// => un point subit d'abord rotY, puis rotX, puis le zoom.
-// Puis projection en perspective avec la caméra par défaut de p5
-// (caméra en z = eyeZ qui regarde vers -z).
 function toScreen(p) {
   let q = rotY(p, sceneYaw);
   q = rotX(q, scenePitch);
   q = [q[0] * zoom, q[1] * zoom, q[2] * zoom];
 
-  const depth = eyeZ - q[2]; // distance devant la caméra
-  if (depth <= 1) return null; // derrière la caméra
+  const depth = eyeZ - q[2]; 
+  if (depth <= 1) return null; 
 
   const k = eyeZ / depth;
   return {
@@ -148,9 +138,8 @@ function toScreen(p) {
 function projectConstellations() {
   for (const c of constellations) {
     c.screenPoints = c.points.map(pt => {
-      // Dans draw(): translate(pos); rotateY(angle); rotateX(tilt);
-      // => rotX d'abord, puis rotY, puis translation.
-      let p = [pt[0], pt[1], 3]; // z = 3 comme pour les sphères dessinées
+
+      let p = [pt[0], pt[1], 3]; 
       p = rotX(p, c.tilt);
       p = rotY(p, c.angle);
       p = [
@@ -163,37 +152,31 @@ function projectConstellations() {
   }
 }
 
-/* ------------------------------------------------------------------ */
-/*  Draw                                                               */
-/* ------------------------------------------------------------------ */
 
 function draw() {
   background(...palette.night);
 
-  // Caméra explicite : identique à celle utilisée dans toScreen()
   eyeZ = (height / 2) / Math.tan(FOV / 2);
   perspective(FOV, width / height, eyeZ / 10, eyeZ * 10);
   camera(0, 0, eyeZ, 0, 0, 0, 0, 1, 0);
 
-  autoRotation += 0.002;
+  //autoRotation += 0.002;
   sceneYaw = viewYaw + autoRotation;
   scenePitch = viewPitch + sin(frameCount * 0.003) * 0.12;
 
   drawBackgroundStars();
 
-  // 1) on projette avec les valeurs de CETTE frame
   projectConstellations();
   hoveredConstellation = findHoveredConstellation();
 
-  // 2) on dessine avec exactement la même transformation
+  updateProjectPreview();
+
   push();
   scale(zoom);
   rotateX(scenePitch);
   rotateY(sceneYaw);
   drawConstellations();
   pop();
-
-  drawHoverLabel();
 
   cursor(hoveredConstellation >= 0 ? HAND : ARROW);
 }
@@ -230,7 +213,6 @@ function drawConstellations() {
     rotateY(c.angle);
     rotateX(c.tilt);
 
-    // Lignes de la constellation
     noFill();
     stroke(...color, active ? 245 : 130);
     strokeWeight(active ? 1.8 : 1);
@@ -241,10 +223,10 @@ function drawConstellations() {
     }
     endShape();
 
-    // Étoiles
     for (let j = 0; j < c.points.length; j++) {
       const point = c.points[j];
-      const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
+      //const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
+      const pulse = 1;
 
       push();
       translate(point[0], point[1], 3);
@@ -261,26 +243,10 @@ function drawConstellations() {
       pop();
     }
 
-    // Nom du projet à côté de la première étoile
-    push();
-    translate(c.points[0][0] + 12, c.points[0][1] + 12, 5);
-
-    noStroke();
-    fill(...palette.cream, active ? 255 : 175);
-    textAlign(LEFT, CENTER);
-    textSize(active ? 15 : 12);
-    text(c.name, 0, 0);
-
-    pop();
     pop();
   }
 }
 
-/* ------------------------------------------------------------------ */
-/*  Détection du survol                                                */
-/* ------------------------------------------------------------------ */
-
-// Distance entre le point (px, py) et le segment a-b
 function distToSegment(px, py, a, b) {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
@@ -293,8 +259,9 @@ function distToSegment(px, py, a, b) {
 }
 
 function findHoveredConstellation() {
-  const STAR_RADIUS = 22; // zone cliquable autour d'une étoile
-  const LINE_RADIUS = 12; // zone cliquable autour d'un trait
+  const STAR_RADIUS = 22; 
+  const LINE_RADIUS = 12; 
+  
 
   let closest = -1;
   let closestDistance = Infinity;
@@ -326,77 +293,54 @@ function findHoveredConstellation() {
   return closest;
 }
 
-function drawHoverLabel() {
-  if (hoveredConstellation < 0) return;
+function updateProjectPreview() {
+  projectPreview.hidden = hoveredConstellation < 0;
+  if (hoveredConstellation < 0) {
+    lastPreviewedConstellation = -1;
+    return;
+  }
 
-  const c = constellations[hoveredConstellation];
-
-  // Carte d'info dessinée en coordonnées écran, par-dessus tout
-  const gl = drawingContext;
-  gl.disable(gl.DEPTH_TEST);
-
-  push();
-  resetMatrix();
-  translate(-width / 2, -height / 2);
+  const project = constellations[hoveredConstellation];
+  if (hoveredConstellation !== lastPreviewedConstellation) {
+    projectPreview.querySelector(".preview-title").textContent = project.name;
+    projectPreview.querySelector(".preview-description").textContent =
+      project.description;
+    lastPreviewedConstellation = hoveredConstellation;
+  }
 
   const margin = 20;
-  const boxWidth = min(260, width - margin * 2);
-  const boxHeight = 64;
+  const gap = 20;
+  const bounds = projectPreview.getBoundingClientRect();
+  let x = mouseX + gap;
+  let y = mouseY + gap;
 
-  let x = mouseX + 20;
-  let y = mouseY + 20;
+  if (x + bounds.width > width - margin) x = mouseX - bounds.width - gap;
+  if (y + bounds.height > height - margin) y = mouseY - bounds.height - gap;
 
-  if (x + boxWidth > width - margin) x = mouseX - boxWidth - 20;
-  if (y + boxHeight > height - margin) y = mouseY - boxHeight - 20;
-
-  x = constrain(x, margin, width - boxWidth - margin);
-  y = constrain(y, margin, height - boxHeight - margin);
-
-  noStroke();
-  fill(23, 18, 28, 240);
-  rect(x, y, boxWidth, boxHeight, 8);
-
-  fill(...palette[c.color]);
-  textAlign(LEFT, TOP);
-  textSize(10);
-  text(c.category, x + 13, y + 11);
-
-  fill(...palette.cream);
-  textSize(15);
-  text(c.name, x + 13, y + 31);
-
-  pop();
-
-  gl.enable(gl.DEPTH_TEST);
+  projectPreview.style.left = `${constrain(x, margin, width - bounds.width - margin)}px`;
+  projectPreview.style.top = `${constrain(y, margin, height - bounds.height - margin)}px`;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Interactions                                                       */
-/* ------------------------------------------------------------------ */
 
 function mousePressed() {
   pressX = mouseX;
   pressY = mouseY;
 }
 
-// Glisser = tourner la vue
 function mouseDragged() {
   viewYaw += (mouseX - pmouseX) * 0.005;
   viewPitch = constrain(viewPitch + (mouseY - pmouseY) * 0.005, -1.2, 1.2);
   return false;
 }
 
-// Molette = zoom
 function mouseWheel(event) {
   zoom = constrain(zoom * (1 - event.delta * 0.001), 0.5, 2);
   return false;
 }
 
 function mouseReleased() {
-  // Un glisser fait tourner la caméra, il ne doit pas ouvrir un projet
   if (dist(mouseX, mouseY, pressX, pressY) > 8) return;
 
-  // La projection de cette frame est déjà à jour
   const index = findHoveredConstellation();
 
   if (index !== -1) {

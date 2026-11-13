@@ -132,9 +132,9 @@ function createFireflies() {
 }
 
 function draw() {
-  background(...palette.night);
+  clear();
 
-  drawMoonGlow();
+ // drawMoonGlow();
   drawFireflies();
 
   // A little movement, like a breeze

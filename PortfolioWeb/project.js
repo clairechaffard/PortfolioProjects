@@ -1,30 +1,27 @@
 
 const projects = {
-  "generative-garden": {
-    category: "01 / CREATIVE CODING",
-    title: "Generative Garden",
-    intro: "An exploration of organic forms, movement and digital growth.",
-    description: "This project explores how simple rules can create organic visual systems. Shapes grow, interact and evolve through code. Replace this text with the story of your own project, your process and the questions you explored.",
-    tools: "p5.js, JavaScript, generative systems",
-    year: "2026"
+  "MichelStory": {
+    title: "Michel's Story",
+    intro: "A 2D RPG game in Java with interconnected rooms filled with items and enemies.",
+    description: "Goal of the game: Navigate through the dungeon, collect useful items, defeat creatures, and ultimately find the key that unlocks access to the final boss.",
+    tools: "Java, object-oriented design, inheritance-based actors  ",
+    year: "2022"
   },
 
-  "soft-signals": {
-    category: "02 / INTERACTIVE DESIGN",
-    title: "Soft Signals",
-    intro: "A small experiment in visual communication and interaction.",
-    description: "Describe the starting point, the problem you wanted to explore, your design decisions and the result. You can add images, sketches, prototypes and videos here later.",
-    tools: "HTML, CSS, JavaScript",
-    year: "2026"
+  "Javions": {
+    title: "Javions",
+    intro: "Flight tracking system designed to receive and decode live ADS-B signals emitted by aircraft. ",
+    description: "Designed the user interface and implemented interactive feature. Applied core OOP principles and design patterns to structure the reception, decoding, and visualization pipelines. Learned and implemented low-level radio workflow: Signal sampling, ADS-B message extraction and Data decoding and visualization.",
+    tools: "Java, JavaFx, Object-Oriented Development",
+    year: "2023"
   },
 
-  "otherworld": {
-    category: "03 / DIGITAL WORLDS",
-    title: "Otherworld",
-    intro: "A visual study of atmosphere, space and digital environments.",
-    description: "Explain how the project developed, what you made yourself, what worked and what you would explore next.",
-    tools: "Creative coding, visual research",
-    year: "2025"
+  "Roi": {
+    title: "Roi",
+    intro: " 2-4 player cards game, challenges the players’ memory",
+    description: "Collaborated through regular meetings to design the game concept and define its rules. Implementation of the backend, User interface design and testing of this multiplayers game.",
+    tools: "Scala",
+    year: "2023"
   }
 };
 
@@ -34,9 +31,6 @@ const project = projects[id];
 
 if (project) {
   document.title = `${project.title} — Midnight Greenhouse`;
-
-  document.getElementById("project-category").textContent =
-    project.category;
 
   document.getElementById("project-title").textContent =
     project.title;
@@ -56,11 +50,9 @@ if (project) {
   document.getElementById("project-cover-label").textContent =
     project.title.toUpperCase();
 } else {
-  document.getElementById("project-category").textContent =
-    "PROJECT NOT FOUND";
 
   document.getElementById("project-title").textContent =
-    "A little detour";
+    "Error 44";
 
   document.getElementById("project-intro").textContent =
     "This project doesn't exist yet. Return to the collection to explore the others.";
