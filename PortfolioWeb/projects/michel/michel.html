@@ -1,42 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Claire's Portfolio</title>
 
-    <link rel="stylesheet" type="text/css" href="michel.css">
-
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-    <script src="michel.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="michel.css">
   </head>
 
   <body>
-
-
-    <div id="visual"></div>
-
     <header class="topbar">
-      <a class = "logo" href="../../index.html">La petite<span>@</span></a>
+      <a class="logo" href="../../home/index.html">La petite<span>@</span></a>
       <span class="top-label">Claire's Portfolio . 2026</span>
       <a class="contact" href="../../contact/contact.html">CONTACT :o</a>
     </header>
 
     <main>
-      <section class="intro">
-        <h1 class="title"> Michel's Story <br></h1>
-        <h2 class="photo">Capture d'écran 2026-11-03 212519.png</h2>
-        
+      <section class="hero">
+        <div class="intro">
+          <h1 class="title">Michel's Story</h1>
+        </div>
+
+        <div class="character-container" id="character" tabindex="0" role="img" aria-label="Michel" aria-keyshortcuts="W A S D">
+          <div class="character-static" aria-hidden="true"></div>
+          <div class="character-animation" aria-hidden="true"></div>
+          <p class="consigne">Use W, A, S, and D to move Michel.</p>
+        </div>
       </section>
 
+      <section class="project-info">
+        <article class="info-row">
+          <h2 class="section-title">What ?</h2>
+          <p class="section-copy">
+            A 2D RPG game in Java where the player explores interconnected rooms filled with items and enemies.
+            Goal of the game: Navigate through the dungeon, collect useful items, defeat creatures, and ultimately find the key that unlocks access to the final boss.
+            The game is built around exploration, progression, and preparation before the ultimate confrontation.
+          </p>
+        </article>
+
+        <article class="info-row">
+          <h2 class="section-title">How ?</h2>
+          <p class="section-copy">
+            Java programming project by team of 2
+            Implemented inheritance-based actors (players, enemies, saviors, projectiles) using object-oriented design.
+            Created gameplay mechanics including health management, random map generation and an animated player.
+            Designed interaction logic between entities (collisions, pickups, damage, healing).
+          </p>
+        </article>
+      </section>
+
+      <section class="photos" aria-label="Game screenshots">
+          <img src="michelcool.png">
+          <img src="michelattack.png">
+          <br> 
+      </section>
+
+      <section class="tutorial" aria-labelledby="tutorial-title">
+        <h2 class="section-title" id="tutorial-title">Game tutorial</h2>
+        <video controls preload="metadata">
+          <source src="michelStory.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </section>
+
+      <section class="links">
+        <h1 class="link1">
+          <a href="https://www.dropbox.com/scl/fi/erebbhm0iqksgy6i567rx/MP2.zip?rlkey=yzall4kjk4ulkeanxzhwnnorr&st=gcg93r8n&e=1&dl=0"> Link to the source code to play </a>
+          <br>
+          <a href="README.pdf" target="_blank">Link to the storytelling, game rules</a>
+        </h1>
+      </section>
+
+      <br>
+      <br>
+      <br>
 
     </main>
-
-    <footer>
-      <span>MADE WITH FEAR</span>
-    </footer>
-
+    <script src="michel.js" defer></script>
   </body>
 </html>

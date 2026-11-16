@@ -1,15 +1,3 @@
-
-const palette = {
-  night: [23, 18, 28],
-  cream: [243, 235, 221],
-  burgundy: [69, 8, 8],
-  rose: [210, 112, 151],
-  lightRose: [239, 177, 194],
-  sage: [163, 181, 139],
-  bark: [100, 67, 64]
-};
-
-
 function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent("visual");

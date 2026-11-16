@@ -29,7 +29,7 @@ let pressY = 0;
 const projectData = [
   {
     name: "Michel's Story",
-    href: "projects/michel/michel.html",
+    href: "../projects/michel/michel.html",
     description: "A 2D RPG in Java with interconnected rooms, items, and enemies.",
     color: "rose",
     angle: 0.2,
@@ -41,7 +41,7 @@ const projectData = [
   },
   {
     name: "Javions",
-    href: "project.html?id=javions",
+    href: "../projects/javions/javions.html",
     description: "A flight-tracking system that receives and decodes live ADS-B signals.",
     color: "sage",
     angle: 2.5,
@@ -53,7 +53,7 @@ const projectData = [
   },
   {
     name: "Roi",
-    href: "project.html?id=roi",
+    href: "../projects/roi/roi.html",
     description: "A memory-challenging card game for two to four players.",
     color: "lightRose",
     angle: 4.5,
