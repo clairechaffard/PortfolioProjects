@@ -4,6 +4,10 @@ const palette = {
   rose: [210, 112, 151],
   lightRose: [239, 177, 194],
   sage: [163, 181, 139], 
+  blue: [34, 101, 187],
+  red: [182, 47, 59], 
+  diamond: [153, 255, 255], 
+  yellow: [255, 254, 149],
 };
 
 let stars = [];
@@ -26,6 +30,7 @@ let pressX = 0;
 let pressY = 0;
 
 const projectData = [
+  
   {
     name: "Michel's Story",
     href: "../projects/michel/michel.html",
@@ -34,33 +39,41 @@ const projectData = [
     angle: 0.2,
     tilt: -0.35,
     points: [
-      [-38, 0], [-18, -24], [5, -5],
-      [27, -30], [47, -8], [30, 20]
+      [0,50], [-70, -10], [-70, -40], [-50, -60], [-20, -60], [0,-50], 
+      [20, -60], [50, -60], [70, -40], [70, -10], [0,50]
+
     ]
   },
   {
     name: "Javions",
     href: "../projects/javions/javions.html",
     description: "A flight-tracking system that receives and decodes live ADS-B signals.",
-    color: "sage",
+    color: "diamond",
     angle: 1.1,
     tilt: 0.3,
     points: [
-      [-35, 8], [-15, -22], [8, 0],
-      [29, -25], [48, 8], [18, 28]
+      [-45,-35], [45,-5], [25,5], [-45,-35], 
+      [-25,35], [-15, 25], [5,35],[25,5], [5,35], [5,15], [-45,-35], [5,15], [-15,25]  
     ]
+
+
+    /*points: [[-35, -25], [-15, -10], [5, -15], [20, 0], [10, 20], [25, 30], [40, 15],[20, 0] ]*/
+
   },
   {
     name: "Roi",
     href: "../projects/roi/roi.html",
     description: "A memory-challenging card game for two to four players.",
-    color: "lightRose",
+    color: "yellow",
     angle: 2.0,
     tilt: -0.2,
     points: [
-      [-38, -8], [-15, -32], [8, -4],
-      [31, -26], [50, 5], [25, 30]
+      [0,-40], [20,10], [40, -20], [40, 20], [30,25], [40, 30], [40,20], [40,30], [-40, 30], 
+      [-30, 25], [-40, 20], [-40,30], [-40,20], [40,20], [-40,20], [-40, -20], [-20, 10], 
+      [0, -40]
     ]
+
+
   }, 
   {
     name: "Game of Life",
@@ -69,23 +82,37 @@ const projectData = [
     color: "cream",
     angle: 2.9,
     tilt: 0.22,
-    points: [
-      [-42, -12], [-24, -30], [-7, -10],
-      [10, -30], [31, -13], [43, 9],
-      [18, 29], [-13, 22], [-42, -12]
-    ]
+    
+points: [
+  [0, -40], [-20, -20], [0, -40], [20, -20], [0, -40], [0, -20], [20, -20], [0, -20], [-20, -20], 
+  [-40,0], [-20,0], [-20, -20], [-20, 0], [0, 0], [0, -20], [0, 0], [20, 0], [20, -20], [20,0], [40,0], [20, -20], [40,0], 
+  [20,20], [20,0], [20,20], [0,20], [0,0], [0,20], [-20, 20], [-20,0], [-20,20], [-40,0], [-20,20], 
+  [0,40], [20,20], [0,40], [0,20]
+]
+
+/*
+
+  [0, -40],
+  [-20, -20], [-40,0], [-20,-20], [0, -20], [20, -20], [0, -40], [20, -20],
+  [-40, 0], [-20, 0], [0, 0], [20, 0], [40, 0],
+  [-20, 20], [0, 20], [20, 20],
+  [0, 40]
+*/
+
   }, 
   {
     name: "CompGraph Kart",
     href: "../projects/mario/mario.html",
     description: "An animated 3D Mario Kart scene.",
-    color: "rose",
+    color: "red",
     angle: 3.8,
     tilt: -0.35,
     points: [
-      [-42, 12], [-25, -23], [-2, 1],
-      [20, -29], [43, -1], [20, 25], [-8, 8]
-    ]
+      [0,2.5], [-10, -2.5], [-20, 22.5], [-30, 12.5], [-15, -22.5], [0, -7.5],
+      [10, -22.5], [30, 12.5], [20, 22.5], [10, -2.5], [0, 2.5]
+  
+  ]
+
   }, 
   {
     name: "Gatherly",
@@ -94,22 +121,22 @@ const projectData = [
     color: "sage",
     angle: 4.7,
     tilt: 0.27,
-    points: [
-      [-40, 4], [-28, -24], [-6, -7],
-      [17, -31], [40, -8], [31, 19], [4, 29]
-    ]
+    points: [[20,-40], [0,-40], [-20,-40], 
+      [-40, -20], [-10, -20], [-20,-40], [-10,-20], [0,-40], [10, -20], [-10,-20], [10,-20], [20,-40], [40, -20], [10, -20],
+      [0,30], [-10,-20], [0,30], [-40, -20], [0,30], [40, -20]]
   }, 
+
   {
     name: "Remember",
     href: "../projects/remember/mario.html",
     description: "A video game developed in Unity.",
-    color: "lightRose",
+    color: "blue",
     angle: 5.6,
     tilt: -0.18,
-    points: [
-      [-43, -5], [-28, -29], [-7, -9],
-      [14, -31], [39, -10], [34, 17], [9, 29]
-    ]
+    points: [ [40, -40], [-40,-40], [0,0], [-40,40], [40,40], [0,0], [40,-40], 
+    [20,-20], [-20, -20], [15, -15], [-15, -15], [10, -10], [-10, -10], [5, -5], [-5,-5], [0,0], 
+    [0,30], [10, 40], [0,30], [-10,40]
+     ]
   }, 
 
 ];
@@ -139,19 +166,38 @@ function createStars() {
   }
 }
 
-function createConstellations() {
-  const radius = min(width * 0.32, height * 0.36);
 
-  constellations = projectData.map(project => ({
-    ...project,
-    position: [
-      cos(project.angle) * radius,
-      sin(project.angle * 1.3) * radius * 0.55,
-      sin(project.angle) * radius
-    ],
-    screenPoints: []
-  }));
+function createConstellations() {
+  const radius = min(width, height) * 0.38;
+  const total = projectData.length;
+
+  // Golden angle: creates a balanced distribution on a sphere
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+  constellations = projectData.map((project, index) => {
+    // Distribute points vertically across the sphere
+    const y = 1 - (2 * (index + 0.5)) / total;
+
+    // Distance from the vertical axis
+    const horizontalRadius = Math.sqrt(1 - y * y);
+
+    // Rotate each point around the vertical axis
+    const phi = index * goldenAngle;
+
+    return {
+      ...project,
+
+      position: [
+        Math.cos(phi) * horizontalRadius * radius,
+        y * radius,
+        Math.sin(phi) * horizontalRadius * radius
+      ],
+
+      screenPoints: []
+    };
+  });
 }
+
 
 function rotX(p, a) {
   return [
@@ -211,7 +257,8 @@ function draw() {
 
   autoRotation += 0.002;
   sceneYaw = viewYaw + autoRotation;
-  scenePitch = viewPitch + sin(frameCount * 0.003) * 0.12;
+  //scenePitch = viewPitch + sin(frameCount * 0.003) * 0.12;
+  scenePitch = viewPitch + sin(frameCount * 0.002) * 0.08;
 
   drawBackgroundStars();
 
@@ -274,7 +321,8 @@ function drawConstellations() {
 
     for (let j = 0; j < c.points.length; j++) {
       const point = c.points[j];
-      const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
+      //const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
+      const pulse = 1;
 
       push();
       translate(point[0], point[1], 3);
