@@ -15,6 +15,7 @@ let constellations = [];
 let hoveredConstellation = -1;
 let projectPreview;
 let lastPreviewedConstellation = -1;
+let previewImage;
 
 const FOV = Math.PI / 3;
 let autoRotation = 0;
@@ -34,6 +35,7 @@ const projectData = [
   {
     name: "Michel's Story",
     href: "../projects/michel/michel.html",
+    image: "../projects/michel/whois.png",
     description: "A 2D RPG in Java with interconnected rooms, items, and enemies.",
     color: "rose",
     angle: 0.2,
@@ -47,6 +49,7 @@ const projectData = [
   {
     name: "Javions",
     href: "../projects/javions/javions.html",
+    image: "../projects/javions/image-1.png",
     description: "A flight-tracking system that receives and decodes live ADS-B signals.",
     color: "diamond",
     angle: 1.1,
@@ -63,6 +66,7 @@ const projectData = [
   {
     name: "Roi",
     href: "../projects/roi/roi.html",
+    image: "../projects/roi/image.png",
     description: "A memory-challenging card game for two to four players.",
     color: "yellow",
     angle: 2.0,
@@ -78,6 +82,7 @@ const projectData = [
   {
     name: "Game of Life",
     href: "../projects/gameofLife/life.html",
+    image:"../projects/gameofLife/image.png",
     description: "A RISC-V assembly implementation of Conway's Game of Life.",
     color: "cream",
     angle: 2.9,
@@ -103,6 +108,7 @@ points: [
   {
     name: "CompGraph Kart",
     href: "../projects/mario/mario.html",
+    image: "../projects/mario/image.png",
     description: "An animated 3D Mario Kart scene.",
     color: "red",
     angle: 3.8,
@@ -117,6 +123,7 @@ points: [
   {
     name: "Gatherly",
     href: "../projects/gatherly/mario.html",
+    image: "../projects/gatherly/image-3.png",
     description: "A web app developed as a bachelor's project.",
     color: "sage",
     angle: 4.7,
@@ -128,7 +135,8 @@ points: [
 
   {
     name: "Remember",
-    href: "../projects/remember/mario.html",
+    href: "../projects/remember/remember.html",
+    image: "../projects/remember/image.png",
     description: "A video game developed in Unity.",
     color: "blue",
     angle: 5.6,
@@ -147,6 +155,7 @@ function setup() {
   canvas.parent("sky-visual");
   pixelDensity(Math.min(window.devicePixelRatio || 1, 2));
   projectPreview = document.getElementById("project-preview");
+  previewImage = projectPreview.querySelector(".preview-image");
 
   createStars();
   createConstellations();
@@ -397,10 +406,18 @@ function updateProjectPreview() {
   }
 
   const project = constellations[hoveredConstellation];
+  
   if (hoveredConstellation !== lastPreviewedConstellation) {
-    projectPreview.querySelector(".preview-title").textContent = project.name;
+
+    projectPreview.querySelector(".preview-title").textContent =
+      project.name;
+
     projectPreview.querySelector(".preview-description").textContent =
       project.description;
+
+    previewImage.src = project.image;
+    previewImage.alt = `${project.name} preview`;
+
     lastPreviewedConstellation = hoveredConstellation;
   }
 

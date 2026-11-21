@@ -66,6 +66,44 @@ body {
   pointer-events: none;
 }
 
+#project-preview {
+  position: fixed;
+  width: 260px;
+  padding: 20px;
+  overflow: hidden;
+
+  background: rgb(23 18 28 / 85%);
+  border: none;
+  box-shadow: none;
+
+  pointer-events: none;
+  z-index: 10;
+}
+.preview-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  opacity: 0.18;
+
+  border: none;
+  border-radius: 0;
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.preview-eyebrow,
+.preview-title,
+.preview-description {
+  position: relative;
+  z-index: 1;
+}
+
 .preview-eyebrow {
   margin: 0 0 9px;
   color: var(--muted);
@@ -76,7 +114,7 @@ body {
 .preview-title {
   margin: 0 0 7px;
   color: var(--cream);
-  font: 20px Georgia, serif;
+  font: 20px;
 }
 
 .preview-description {
