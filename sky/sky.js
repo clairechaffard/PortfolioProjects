@@ -209,7 +209,7 @@ function draw() {
   perspective(FOV, width / height, eyeZ / 10, eyeZ * 10);
   camera(0, 0, eyeZ, 0, 0, 0, 0, 1, 0);
 
-  //autoRotation += 0.002;
+  autoRotation += 0.002;
   sceneYaw = viewYaw + autoRotation;
   scenePitch = viewPitch + sin(frameCount * 0.003) * 0.12;
 
@@ -274,8 +274,7 @@ function drawConstellations() {
 
     for (let j = 0; j < c.points.length; j++) {
       const point = c.points[j];
-      //const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
-      const pulse = 1;
+      const pulse = 1 + sin(frameCount * 0.04 + j) * 0.2;
 
       push();
       translate(point[0], point[1], 3);
