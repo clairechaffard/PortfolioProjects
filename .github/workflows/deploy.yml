@@ -26,7 +26,7 @@ jobs:
       - name: Upload subfolder artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "PortfolioProjects/PortfolioWeb/home"
+          path: "PortfolioProjects/PortfolioWeb"
 
       - name: Deploy to GitHub Pages
         id: deployment
