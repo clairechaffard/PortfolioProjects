@@ -1,0 +1,254 @@
+:root {
+  --night: #17121c;
+  --cream: #f3ebdd;
+  --creamplus: #ffe8c1; 
+  --rose: #d27097;
+  --sage: #a5e7d2;
+  --muted: #a8a0ab;
+  --line: rgb(243 235 221 / 14%);
+  --panel: rgb(243 235 221 / 4%);
+  --sub: #decfb6c3;
+}
+
+
+html {
+  scroll-behavior: smooth;
+  background: var(--night);
+  color: var(--cream);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.topbar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px 7vw;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+  letter-spacing: -0.08em;
+}
+
+.logo span {
+  color: var(--rose);
+  font-size: 7px;
+  vertical-align: top;
+}
+
+.top-label {
+  color: var(--muted);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+
+.contact {
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+.goback {
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+.project-info,
+.photos {
+  width: min(1120px, 86vw);
+  margin: 0 auto;
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  max-width: 650px;
+  margin: 0;
+  color: var(--creamplus);
+  font-size: clamp(58px, 7vw, 100px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.075em;
+}
+
+.maintitle .title {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.maintitle .subtitle {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subtitle {
+  max-width: 650px;
+  margin: 0;
+  color: var(--sub);
+  font-size: clamp(15px, 3vw, 15px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.070em;
+  text-align: center;
+}
+
+.project-info {
+  padding: 16px 0 26px;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.55fr) 1.45fr;
+  gap: 5vw;
+  padding: 38px 0;
+}
+
+.section-title {
+  margin: 0;
+  color: var(--rose);
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.section-copy {
+  max-width: 680px;
+  margin: -7px 0 0;
+  color: var(--cream);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.9;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(1120px, 86vw);
+  gap: 30px;
+}
+
+.photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+
+.tutorial {
+  width: min(900px, 86vw);
+  margin: 0 auto;
+  padding: 55px 0 70px;
+}
+
+.tutorial .section-title {
+  margin-bottom: 20px;
+}
+
+.tutorial video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+
+a:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    padding: 24px 7vw;
+  }
+
+  .top-label {
+    display: none;
+  }
+
+  .project-info,
+  .photos {
+    width: 86vw;
+  }
+
+  .title {
+    font-size: clamp(34px, 8.5vw, 64px);
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 30px 0;
+  }
+
+  .section-copy {
+    margin: 0;
+  }
+
+  .photos {
+    gap: 14px;
+    padding: 55px 0 70px;
+  }
+}
+
+@media (max-width: 520px) {
+  .project-info,
+  .photos {
+    width: 88vw;
+  }
+
+  .contact {
+    font-size: 9px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
+  }
+
+  .title {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+
+  .photos {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.links {
+  padding: 28px 7vw;
+  font-size: clamp(9px, 0.5vw, 5px);
+  color: var(--sage)
+}

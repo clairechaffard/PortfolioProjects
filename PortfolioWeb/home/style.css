@@ -72,14 +72,14 @@ main {
 
 .logo {
   font-family: 'DM Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 100;
   letter-spacing: -0.08em;
 }
 
 .logo span {
   color: var(--rose);
-  font-size: 10px;
+  font-size: 7px;
   vertical-align: top;
 }
 

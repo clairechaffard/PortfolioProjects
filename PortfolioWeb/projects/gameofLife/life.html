@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Claire's Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="life.css">
+  </head>
+
+  <body>
+    <canvas id="life-background" aria-hidden="true"></canvas>
+    <header class="topbar">
+      <a class="logo" href="../../home/index.html">Rikki-Tikki-Tavi<span>@</span></a>
+      <span class="top-label">Claire's Portfolio . 2026</span>
+      <div class="topbar-actions">
+        <a class="goback" href="../../sky/sky.html">Go back ;]</a>
+        <a class="contact" href="../../contact/contact.html">CONTACT :o</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="maintitle">
+        <div class="intro">
+          <h1 class="title">Game of Life</h1>
+          <h2 class = "subtitle"> Computer Architecture </h2>
+        </div>
+      </section>
+
+      <section class="project-info">
+        <article class="info-row">
+          <h2 class="section-title">What ?</h2>
+          <p class="section-copy">
+            Implemented Conway’s Game of Life, a zero-player game where evolution is fully determined by the initial seed.
+            The game runs on an infinite two-dimensional grid of cells. 
+            At each time step, the grid evolves according to a defined set of state-transition rules.
+            Fully playable on Gecko5 board. 
+            <span class="gecko-mention">
+              <img src="gecko.png" alt="Gecko5 development board">
+            </span>
+          </p>
+        </article>
+
+        <article class="info-row">
+          <h2 class="section-title">How ?</h2>
+          <p class="section-copy">
+            Low-Level Programming:
+              Developed a complete program in RISC-V assembly language.
+              Implemented the game logic using a finite state machine approach.
+
+            Hardware Interaction:
+              Controlled LEDs to display the game state.
+              Used hardware buttons for user interaction and control. 
+              Integrated a timer displaying the remaining number of steps.
+          </p>
+        </article>
+      </section>
+
+      <section class="photos" aria-label="Game screenshots">
+          <img src="image.png">
+          <img src="image-1.png">
+          <br> 
+      </section>
+
+      <br>
+      <br>
+      <br>
+
+    </main>
+    <script src="life.js" defer></script>
+  </body>
+</html>

@@ -4,7 +4,6 @@ const palette = {
   rose: [210, 112, 151],
   lightRose: [239, 177, 194],
   sage: [163, 181, 139], 
-  textcolor: [2,2,2],
 };
 
 let stars = [];
@@ -44,7 +43,7 @@ const projectData = [
     href: "../projects/javions/javions.html",
     description: "A flight-tracking system that receives and decodes live ADS-B signals.",
     color: "sage",
-    angle: 2.5,
+    angle: 1.1,
     tilt: 0.3,
     points: [
       [-35, 8], [-15, -22], [8, 0],
@@ -56,13 +55,63 @@ const projectData = [
     href: "../projects/roi/roi.html",
     description: "A memory-challenging card game for two to four players.",
     color: "lightRose",
-    angle: 4.5,
+    angle: 2.0,
     tilt: -0.2,
     points: [
       [-38, -8], [-15, -32], [8, -4],
       [31, -26], [50, 5], [25, 30]
     ]
-  }
+  }, 
+  {
+    name: "Game of Life",
+    href: "../projects/gameofLife/life.html",
+    description: "A RISC-V assembly implementation of Conway's Game of Life.",
+    color: "cream",
+    angle: 2.9,
+    tilt: 0.22,
+    points: [
+      [-42, -12], [-24, -30], [-7, -10],
+      [10, -30], [31, -13], [43, 9],
+      [18, 29], [-13, 22], [-42, -12]
+    ]
+  }, 
+  {
+    name: "CompGraph Kart",
+    href: "../projects/mario/mario.html",
+    description: "An animated 3D Mario Kart scene.",
+    color: "rose",
+    angle: 3.8,
+    tilt: -0.35,
+    points: [
+      [-42, 12], [-25, -23], [-2, 1],
+      [20, -29], [43, -1], [20, 25], [-8, 8]
+    ]
+  }, 
+  {
+    name: "Gatherly",
+    href: "../projects/gatherly/mario.html",
+    description: "A web app developed as a bachelor's project.",
+    color: "sage",
+    angle: 4.7,
+    tilt: 0.27,
+    points: [
+      [-40, 4], [-28, -24], [-6, -7],
+      [17, -31], [40, -8], [31, 19], [4, 29]
+    ]
+  }, 
+  {
+    name: "Remember",
+    href: "../projects/remember/mario.html",
+    description: "A video game developed in Unity.",
+    color: "lightRose",
+    angle: 5.6,
+    tilt: -0.18,
+    points: [
+      [-43, -5], [-28, -29], [-7, -9],
+      [14, -31], [39, -10], [34, 17], [9, 29]
+    ]
+  }, 
+
 ];
 
 function setup() {
@@ -91,7 +140,7 @@ function createStars() {
 }
 
 function createConstellations() {
-  const radius = min(width * 0.36, height * 0.48);
+  const radius = min(width * 0.32, height * 0.36);
 
   constellations = projectData.map(project => ({
     ...project,
@@ -259,8 +308,8 @@ function distToSegment(px, py, a, b) {
 }
 
 function findHoveredConstellation() {
-  const STAR_RADIUS = 22; 
-  const LINE_RADIUS = 12; 
+  const STAR_RADIUS = width < 600 ? 34 : 24;
+  const LINE_RADIUS = width < 600 ? 20 : 14;
   
 
   let closest = -1;

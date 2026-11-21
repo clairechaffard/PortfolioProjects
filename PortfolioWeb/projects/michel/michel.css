@@ -44,14 +44,14 @@ a {
 
 .logo {
   font-family: 'DM Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 100;
   letter-spacing: -0.08em;
 }
 
 .logo span {
   color: var(--rose);
-  font-size: 10px;
+  font-size: 7px;
   vertical-align: top;
 }
 
@@ -59,10 +59,22 @@ a {
   color: var(--muted);
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+
 .contact {
   padding-bottom: 5px;
   white-space: nowrap;
 }
+
+.goback {
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
 
 .hero,
 .project-info,
@@ -249,6 +261,14 @@ a:focus-visible {
 
   .contact {
     font-size: 9px;
+  }
+
+  .goback {
+    font-size: 9px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
   }
 
   .hero {
