@@ -90,32 +90,40 @@ main {
   white-space: nowrap;
 }
 
+
 main {
+  position: relative;
+  z-index: auto;
+
   min-height: calc(100vh - 115px);
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
   padding: 10px 6vw 40px 8vw;
 }
 
 .intro {
   width: min(760px, 90vw);
   margin-left: auto;
-  margin-top: 0;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 18px;
+
   text-align: right;
   pointer-events: none;
 }
 
 .titleintro {
   color: var(--sage);
-  margin: 0;
-  letter-spacing: 0.14em;
+  font-family: 'DM Mono', monospace;
   font-size: 10px;
-  text-align: right;
+  letter-spacing: 0.14em;
+
+  margin: 0;
   order: 2;
 }
 
@@ -142,13 +150,23 @@ main {
 }
 
 .cv {
-  font-size: clamp(70px, 5vw, 35px);
-  line-height: 0.99;
-  letter-spacing: -0.065em;
-  font-weight: 600;
+  color: var(--muted);
+
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+
   margin: 0;
-  order: 3;
+  order: 4;
+
+  pointer-events: auto;
+  transition: color 0.3s ease;
 }
+
+.cv:hover {
+  color: var(--sage);
+}
+
 
 .moon-link {
   position: fixed;
